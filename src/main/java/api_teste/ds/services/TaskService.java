@@ -26,6 +26,8 @@ import api_teste.ds.models.User;
 
 //Importa a interface do repositório responsável pelas operações no banco de dados
 import api_teste.ds.repositories.TaskRepository;
+import api_teste.ds.repositories.UserService;
+import jakarta.persistence.Id;
 
 //Anotação que indica para o Spring que essa classe contém as regras de negócio
 @Service
@@ -56,7 +58,7 @@ public class TaskService {
     public List<Task> findByUserId(Long UserId){
 
         //Chama o UserService para garantir que o usuário existe no banco de dados (lança exceção se não existir)
-        this.userService.findById(UserId);
+        this.UserService.findById(UserId);
 
         //Executa a busca customizada no repositório filtrando pelo id do usuário
         List<Task> tasks = this.taskRepository.findByUserId(UserId);
@@ -72,10 +74,10 @@ public class TaskService {
         public Task create(Task obj){
 
             //Valida se o usuário informado no objeto realmente existe no banco e recupera seus dados
-            User user = this.userService.findById(obj.getUser().getId());
+            User user = this.UserService.findById(obj.getUser().getId());
 
             //Define o ID como NULL para garantir que o JPA realize um inserção(INSERT) e não uma atualização
-            obj.setId(id = null);
+            obj.setId( null);
 
             //Associa a entidade User completa e validada a tarefa
             obj.setUser(user);
@@ -111,7 +113,7 @@ public class TaskService {
 
                 this.taskRepository.deleteById(Id);
             } catch (Exception e){
-                throw new RuntimeErrorException(message:"Não é possivel excluir pois não há tarefas relacionadas"
+                throw new RuntimeException("Não é possivel excluir pois não há tarefas relacionadas");
             }
 
     }  

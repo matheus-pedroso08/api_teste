@@ -46,9 +46,22 @@ public class UserService{
     public user update(User obj){
 
         User newObj = findById(obj.getId())
-    }
-    
-    
-}
-    
 
+        newObj.setPassword(obj.getPassword());
+
+        return this.userRepository.save(newObj);
+
+    }
+
+    public void delete(Long Id){
+
+        findById(Id);
+
+        try{
+            this.userRepository.deleteById(Id);
+        } catch (Exception e){
+            throw new RuntimeException("Não é possivel exibir pois há entidade relacionada");
+        }
+    }
+
+}
