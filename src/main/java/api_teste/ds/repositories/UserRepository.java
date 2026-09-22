@@ -2,12 +2,9 @@ package api_teste.ds.repositories;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
 // Importação da entidade User
 import api_teste.ds.models.User;
 
-@Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
     /**

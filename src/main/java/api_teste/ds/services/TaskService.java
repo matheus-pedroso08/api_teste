@@ -26,7 +26,6 @@ import api_teste.ds.models.User;
 
 //Importa a interface do repositório responsável pelas operações no banco de dados
 import api_teste.ds.repositories.TaskRepository;
-import api_teste.ds.repositories.UserService;
 import jakarta.persistence.Id;
 
 //Anotação que indica para o Spring que essa classe contém as regras de negócio
@@ -55,17 +54,12 @@ public class TaskService {
     }   
 
     //Método para buscar todas as terfas vinculadas a um determinado usuário
-    public List<Task> findByUserId(Long UserId){
-
-        //Chama o UserService para garantir que o usuário existe no banco de dados (lança exceção se não existir)
+    public List<Task> findByUserId(Long UserId) {
         this.UserService.findById(UserId);
-
-        //Executa a busca customizada no repositório filtrando pelo id do usuário
-        List<Task> tasks = this.taskRepository.findByUserId(UserId);
-
-        //Retorna a lista de tarefas
+    
+        List<Task> tasks = this.taskRepository.findByUser_Id(UserId);
+    
         return tasks;
-
     }
 
 
@@ -119,3 +113,4 @@ public class TaskService {
     }  
 
 }
+
