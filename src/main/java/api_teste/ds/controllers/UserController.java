@@ -35,12 +35,26 @@ public class UserController {
         return ResponseEntity.ok().body(obj);
     }//Fim do método FindbyId
 
-    @PostMapping
-    public ResponseEntity<void> create(@Validated (CreateUser.class) @ResquestBody User obj){
+    @PostMapping //Mapeia requesições HTTP POST na rota base"/user"(criação de novo usuario)
+    public ResponseEntity<Void> create(@Validated (CreateUser.class) @RequestBody User obj){
     this.userService.create(obj);
-    URI url = ServletUriComponentsBuilder.fromCurrentContextPath()
-        .path("/{id}").buildAndExpand(obj.getId()).touri();
-        return ResponseEntity.created(url)build();    
+    URI url = ServletUriComponentsBuilder.fromCurrentRequest()
+        .path("/{id}").buildAndExpand(obj.getId()).toUri();
+        return ResponseEntity.created(url).build();    
+    }
+
+    @PutMapping("/(id")
+    public ResponseEntity<Void> update(@Validated(UpdateUser.class)@RequestBody User obj, @PathVariable Long id){
+        obj.setId(id);
+        this.userService.update(obj);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping ("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable long id){
+        this.userService.delete(id);
+        return ResponseEntity.noContent().build();
+
     }
 
 }
