@@ -56,7 +56,6 @@ public class UserService {
 
     User newObj = findById(obj.getId());
 
-    newObj.setUsername(obj.getUsername());
     newObj.setPassword(obj.getPassword());
 
     return this.userRepository.save(newObj);

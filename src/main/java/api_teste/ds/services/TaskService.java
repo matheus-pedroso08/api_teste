@@ -53,6 +53,11 @@ public class TaskService {
 
     }   
 
+    public List<Task> findAllByUserId(Long userId){
+        List<Task> tasks = this.taskRepository.findByUser_Id(userId);
+        return tasks;
+    }
+
     //Método para buscar todas as terfas vinculadas a um determinado usuário
     public List<Task> findByUserId(Long UserId) {
         this.UserService.findById(UserId);

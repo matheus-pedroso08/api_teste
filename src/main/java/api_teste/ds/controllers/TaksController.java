@@ -33,7 +33,7 @@ public class TaksController {
         return ResponseEntity.ok().body(obj);
     }
 
-    @GetMapping("/user/{userid")
+    @GetMapping("/user/{userid}")
     public ResponseEntity<List<Task>> findAllByUserId(@PathVariable long userId){
         List<Task> objs = this.taskService.findAllByUserId(userId);
         return ResponseEntity.ok().body(objs);
@@ -55,7 +55,7 @@ public class TaksController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping ("/{id")
+    @DeleteMapping ("/{id}")
     public ResponseEntity<Void> delete(@PathVariable long id){
         this.taskService.delete(id);
         return ResponseEntity.noContent().build();
