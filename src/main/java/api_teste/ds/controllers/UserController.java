@@ -1,37 +1,40 @@
 package api_teste.ds.controllers;
 
-import java.net.URI;
 
-import org.springframework.beans.factory.annotation.Autowired;//injeção automatica do Spring
-import org.springframework.http.ResponseEntity;//importa a classe para montar a resposta HTTP completa(status, headers, )
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;//mapea requisições do tipo delete
-import org.springframework.web.bind.annotation.GetMapping;//mapea requisições do tipo GET
-import org.springframework.web.bind.annotation.PathVariable;//mapeia variaveis passadas diretamente via caminho URL
-import org.springframework.web.bind.annotation.PostMapping;//mapeia requisições do tipo POST
-import org.springframework.web.bind.annotation.PutMapping;//mapeia requisições do tipo PUT
-import org.springframework.web.bind.annotation.RequestBody;//converste objetos JSON em objetos JAVA 
-import org.springframework.web.bind.annotation.RequestMapping;//Importa anotação para definir o caminho/rota bas do controlador
-import org.springframework.web.bind.annotation.RestController;//Importa anotação que define esta classe como um controller REST
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;//Importa utilitario para gerar a URI ds requisição atual dinamicamente.
+import java.net.URI; // Importa a classe URI para construir e manipular HTTP de novos recursos
+import java.util.ServiceLoader;
+
+import org.springframework.beans.factory.annotation.Autowired; // Injeção automática do Spring
+import org.springframework.http.ResponseEntity; // Importa a classe para montar a resposta HTTP completa (Status headers, corpo da mensagem)
+import org.springframework.validation.annotation.Validated; // Importa anotação para habilitar suporte a validação no controller
+import org.springframework.web.bind.annotation.DeleteMapping; // Mapeia requisições do tipo delete
+import org.springframework.web.bind.annotation.GetMapping; // Mapeia requisições do tipo GET
+import org.springframework.web.bind.annotation.PathVariable; // Mapeia valiáveis passadas diretamente via caminho da URL
+import org.springframework.web.bind.annotation.PostMapping; // Mapeia requisições do tipo POST
+import org.springframework.web.bind.annotation.PutMapping; // Mapeia requisições do tipo PUT
+import org.springframework.web.bind.annotation.RequestBody; // Converte objetos JSON em objetos JAVA
+import org.springframework.web.bind.annotation.RequestMapping; // Importa anotação para deginir o caminho/rota base do controlador
+import org.springframework.web.bind.annotation.RestController; // Importa anotação que define esta classe como um controller REST
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder; // Importa utilitário para gerar a URI da requisição atual dinamicamente
 
 import api_teste.ds.models.User;
 import api_teste.ds.models.User.CreateUser;
 import api_teste.ds.models.User.UpdateUser;
 import api_teste.ds.services.UserService;
+import org.springframework.web.bind.annotation.RequestParam;
 
-@RestController // Define a classe como um comum controlador REST que retorna resposta em JSON
-@RequestMapping ("/user")// Define que todas as rotas desta classe terão como prefixo o caminho "/user"
-@Validated 
+@RestController // Define a classe como um controlador REST que retorna respostas em JSON
+@RequestMapping ("/user") // Define que todas as rotas desta classe terão como prefixo o caminho "/user"
+@Validated // Ativa a verificação de validações nos parâmetros recebidos no controller
 
 public class UserController {
-
-    @Autowired 
+    
+    @Autowired
     private UserService userService;
 
     @GetMapping ("/{id}") // Mapeia requisições HTTP GET na rota "/user/{id}"
-    public ResponseEntity<User> findById(@PathVariable Long Id) { // Método para buscar usuário por id capturado da URL
-        User obj = this.userService.findById(Id); // Invoca a buscar do usuário através do ID recebido
+    public ResponseEntity<User> findById(@PathVariable Long id) { // Método para buscar usuário por id capturado da URL
+        User obj = this.userService.findById(id); // Invoca a buscar do usuário através do ID recebido
         return ResponseEntity.ok().body(obj); // Retorna código HTTP 200(pk) com o objeto User no corpo da resposta
     } // Fim do método findById
 
@@ -54,7 +57,7 @@ public class UserController {
 
     }
 
-        @DeleteMapping ("/{id}") // Mapeia requisições HTTP DELETE na rota "/user/{id}" (exclusão de usuário)
+        @DeleteMapping ("/{id}") // Mapeia requisições HTTP DELTE na rota "/user/{id}" (exclusão de usuário)
         public ResponseEntity<Void> delete(@PathVariable Long id) { // Captura o ID da URL a ser deletado
             this.userService.delete(id); // Invoca o método de deleção do serviço
             return ResponseEntity.noContent().build(); // Retorna código HTTP 204 (No content) confirmando a exclusão
