@@ -35,8 +35,8 @@ public class TaskController { //declaraçao de classe pibulica TaskController
     } //fim do metodo findById
 
     @GetMapping("/user/{userid}")
-    public ResponseEntity<List<Task>> findAllByUserId(@PathVariable Long userId){
-        List<Task> objs = this.taskService.findAllByUserId(userId);
+    public ResponseEntity<List<Task>> findAllByUserId(@PathVariable Long userid){
+        List<Task> objs = this.taskService.findAllByUserId(userid);
         return ResponseEntity.ok().body(objs);
     }
 
